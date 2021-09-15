@@ -1,21 +1,15 @@
 package hash
 
 import model.Block
+import validators.verification.VerificationRule
 import java.security.MessageDigest
 
-class SHA256 : HashAlgorithm() {
+class SHA256(verificationRule: VerificationRule) : HashAlgorithm(verificationRule) {
     override fun hash(block: Block): String {
         return encode(block.toString())
     }
 
-    /**
-     * Verifies that the encoded proof ends in '0000'
-     */
-    override fun verify(previousProof: Long, proof: Long): Boolean {
-        return encode("$previousProof$proof").endsWith("0000")
-    }
-
-    private fun encode(input: String): String {
+    override fun encode(input: String): String {
         val hexChars = "0123456789ABCDEF"
         val bytes = MessageDigest
             .getInstance("SHA-256")

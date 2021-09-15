@@ -3,12 +3,13 @@ package blockchain
 import hash.HashAlgorithm
 import model.Block
 import model.Transaction
+import validators.Validator
 import java.time.Instant
 
 const val INITIAL_BLOCK_PROOF: Long = -1
 const val INITIAL_BLOCK_PREVIOUS_HASH = "blockchainkt"
 
-class Blockchain(private val hashAlgorithm: HashAlgorithm) {
+class Blockchain(private val validator: Validator, private val hashAlgorithm: HashAlgorithm) {
     private val chain: ArrayList<Block> = ArrayList()
     private val transactions: ArrayList<Transaction> = ArrayList()
 
@@ -36,7 +37,7 @@ class Blockchain(private val hashAlgorithm: HashAlgorithm) {
         if (chain.isEmpty()) {
             return null
         }
-        return chain.last();
+        return chain.last()
     }
 
     fun getNextBlockIndex(): Int {
